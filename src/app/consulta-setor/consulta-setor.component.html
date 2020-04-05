@@ -1,0 +1,31 @@
+<h4>Consulta de Setores</h4>
+<br/>
+
+<table class="table table-bordered table-hover table-stripped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome do Setor</th>
+            <th>Operações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of setores">
+            <td>{{item.idSetor}}</td>
+            <td>{{item.nome}}</td>
+            <td>
+                <button class="btn btn-primary btn-sm mr-2">
+                    Atualizar
+                </button>
+                <button class="btn btn-danger btn-sm">
+                    Excluir
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Quantidade de setores: {{setores.length}} </td>
+        </tr>
+    </tfoot>
+</table>

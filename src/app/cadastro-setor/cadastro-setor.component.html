@@ -1,0 +1,19 @@
+<h4>Cadastro de Setor</h4>
+<br/>
+
+<form #formCadastro="ngForm" (submit)="cadastrarSetor(formCadastro)">
+
+    <label>Nome do Setor</label>
+    <input type="text" class="form-control col-md-4"
+           placeholder="Digite aqui"
+           name="Nome" ngModel/>
+    <br/>
+
+    <input type="submit" class="btn btn-success"
+           value="Cadastrar Setor"/>
+           <br/>
+           <br/>
+
+<strong>{{mensagem}}</strong>
+
+</form>
