@@ -1,1 +1,51 @@
-<p>cadastro-funcionario works!</p>
+<h4>Cadastro de Funcionários</h4>
+<br/>
+
+<form #formCadastro="ngForm" (submit)="cadastrarFuncionario(formCadastro)">
+
+    <label>Nome do Funcionário:</label>
+    <input type="text" name="Nome" ngModel
+           class="form-control col-md-4"
+           placeholder="Digite aqui"/>
+    <br/>
+
+    <label>Salário:</label>
+    <input type="text" name="Salario" ngModel
+           class="form-control col-md-4"
+           placeholder="Digite aqui"/>
+    <br/>
+
+    <label>Data de Admissão:</label>
+    <input type="date" name="DataAdmissao" ngModel
+           class="form-control col-md-4"
+           placeholder="Digite aqui"/>
+    <br/>
+
+    <label>Selecione o Setor:</label>
+    <select name="IdSetor" ngModel 
+            class="form-control col-md-4">
+        <option value="">Escolha uma opção</option>
+        <option *ngFor="let item of setores" value="{{item.idSetor}}">
+            {{item.nome}}
+        </option>
+    </select>
+    <br/>
+
+    <label>Selecione a Função:</label>
+    <select name="IdFuncao" ngModel 
+            class="form-control col-md-4">
+        <option value="">Escolha uma opção</option>
+        <option *ngFor="let item of funcoes" value="{{item.idFuncao}}">
+            {{item.descricao}}
+        </option>
+    </select>
+    <br/>
+
+    <input type="submit" value="Salvar"
+           class="btn btn-success"/>
+    <br/>
+    <br/>
+
+    <strong>{{mensagem}}</strong>
+
+</form>

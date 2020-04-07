@@ -1,1 +1,32 @@
-<p>consulta-funcao works!</p>
+<h4>Consulta de Funcões</h4>
+<br/>
+
+<table class="table table-bordered table-hover table-stripped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome da Função</th>
+            <th>Operações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of funcoes">
+            <td>{{item.idFuncao}}</td>
+            <td>{{item.descricao}}</td>
+            <td>
+                <button class="btn btn-primary btn-sm mr-2">
+                    Atualizar
+                </button>
+                <button class="btn btn-danger btn-sm">
+                    Excluir
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Quantidade de funções: {{funcoes.length}} </td>
+        </tr>
+    </tfoot>
+</table>
+

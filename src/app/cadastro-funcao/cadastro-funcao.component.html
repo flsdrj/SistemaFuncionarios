@@ -1,14 +1,19 @@
 <h4>Cadastro de Funcao</h4>
 <br/>
 
-<form #formFuncao="ngForm">
+<form #formCadastro="ngForm" (submit)="cadastrarFuncao(formCadastro)">
 
-    <label>Nome do Funcao</label>
+    <label>Nome da Funcao</label>
     <input type="text" class="form-control col-md-4"
-           placeholder="Digite aqui"/>
+           placeholder="Digite aqui"
+           name="Descricao" ngModel/>
     <br/>
 
     <input type="submit" class="btn btn-success"
            value="Cadastrar Funcao"/>
+           <br/>
+           <br/>
+
+<strong>{{mensagem}}</strong>
 
 </form>

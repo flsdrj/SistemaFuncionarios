@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-consulta-funcionario',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsultaFuncionarioComponent implements OnInit {
 
-  constructor() { }
+  //atributo
+  funcionarios = []; //array vazio..
 
+  //injeção de dependência
+  constructor(private httpClient:HttpClient) { }
+
+  //função executada sempre que o componente for renderizado
   ngOnInit(): void {
+
+    this.httpClient.get("http://localhost:53634/api/funcionario")
+      .subscribe(
+        (data:any[]) =>{
+          this.funcionarios = data;
+        }
+      );
+
   }
 
 }

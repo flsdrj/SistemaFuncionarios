@@ -1,1 +1,40 @@
-<p>consulta-funcionario works!</p>
+<h4>Consulta de Funcionarios</h4>
+<br/>
+
+<table class="table table-bordered table-hover table-stripped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome Funcionario</th>
+            <th>Salário</th>            
+            <th>Data Admissão</th>
+            <th>Setor</th>
+            <th>Função</th>
+            <th>Operações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of funcionarios">
+            <td>{{item.idFuncionario}}</td>
+            <td>{{item.nome}}</td>
+            <td>{{item.salario}}</td>
+            <td>{{item.dataAdmissao}}</td>
+            <td>{{item.setor.nome}}</td>
+            <td>{{item.funcao.descricao}}</td>
+            <td>
+                <button class="btn btn-primary btn-sm mr-2">
+                    Atualizar
+                </button>
+                <button class="btn btn-danger btn-sm">
+                    Excluir
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="7">Quantidade de Funcionarios: {{funcionarios.length}} </td>
+        </tr>
+    </tfoot>
+</table>
+
