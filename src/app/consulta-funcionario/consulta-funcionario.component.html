@@ -1,13 +1,17 @@
-<h4>Consulta de Funcionarios</h4>
-<br/>
+<h4>Consulta de Funcionários</h4>
+<br />
+
+<div>
+    <strong>{{mensagem}}</strong>
+</div>
 
 <table class="table table-bordered table-hover table-stripped">
     <thead>
         <tr>
             <th>Código</th>
-            <th>Nome Funcionario</th>
-            <th>Salário</th>            
-            <th>Data Admissão</th>
+            <th>Nome do Funcionário</th>
+            <th>Salário</th>
+            <th>Data de Admissão</th>
             <th>Setor</th>
             <th>Função</th>
             <th>Operações</th>
@@ -17,15 +21,16 @@
         <tr *ngFor="let item of funcionarios">
             <td>{{item.idFuncionario}}</td>
             <td>{{item.nome}}</td>
-            <td>{{item.salario}}</td>
-            <td>{{item.dataAdmissao}}</td>
+            <td>{{item.salario | currency: 'R$ '}}</td>
+            <td>{{item.dataAdmissao | date : 'dd/MM/yyyy'}}</td>
             <td>{{item.setor.nome}}</td>
             <td>{{item.funcao.descricao}}</td>
             <td>
-                <button class="btn btn-primary btn-sm mr-2">
+                <button class="btn btn-primary btn-sm mr-2" (click)="exibirFuncionario(item.idFuncionario)"
+                    data-target="#janelaedicao" data-toggle="modal">
                     Atualizar
                 </button>
-                <button class="btn btn-danger btn-sm">
+                <button class="btn btn-danger btn-sm" (click)="excluirFuncionario(item.idFuncionario)">
                     Excluir
                 </button>
             </td>
@@ -33,8 +38,69 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="7">Quantidade de Funcionarios: {{funcionarios.length}} </td>
+            <td colspan="7">Quantidade de funcionários: {{funcionarios.length}} </td>
         </tr>
     </tfoot>
 </table>
 
+<div id="janelaedicao" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h4 class="modal-title">Atualizar Funcionário</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form #formEdicao="ngForm" (submit)="atualizarFuncionario(formEdicao)">
+
+                    <input type="hidden" name="IdFuncionario"
+                        [(ngModel)]="funcionarioEdicao.idFuncionario" />
+
+                    <label>Nome do Funcionário:</label>
+                    <input type="text" name="Nome" class="form-control"
+                        [(ngModel)]="funcionarioEdicao.nome" />
+                    <br />
+
+                    <label>Salário:</label>
+                    <input type="text" name="Salario" class="form-control"
+                        [(ngModel)]="funcionarioEdicao.salario" />
+                    <br />
+
+                    <label>Data de Admissão:</label>
+                    <input type="text" name="DataAdmissao" class="form-control"
+                        [(ngModel)]="funcionarioEdicao.dataAdmissao" />
+                    <br />
+
+                    <label>Selecione o Setor:</label>
+                    <select name="IdSetor" class="form-control"
+                        [(ngModel)]="funcionarioEdicao.idSetor">
+                        <option *ngFor="let item of setores" value="{{item.idSetor}}">
+                            {{item.nome}}
+                        </option>
+                    </select>
+                    <br />
+
+                    <label>Selecione a Função:</label>
+                    <select name="IdFuncao" class="form-control"
+                        [(ngModel)]="funcionarioEdicao.idFuncao">
+                        <option *ngFor="let item of funcoes" value="{{item.idFuncao}}">
+                            {{item.descricao}}
+                        </option>
+                    </select>
+                    <br />
+
+                    <input type="submit" value="Atualizar Funcionário" class="btn btn-success" />
+                    <br />
+                    <br />
+
+                    <strong>{{mensagemEdicao}}</strong>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
