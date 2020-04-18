@@ -8,8 +8,11 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <a class="nav-link" href="/">Página inicial <span class="sr-only">(current)</span></a>
-        </li>     
-        <li class="nav-item dropdown">
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="acesso-usuario">Acesso de Usuários</a>
+        </li>      
+        <li class="nav-item dropdown" *ngIf="isAuthenticated">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Manter Funções
           </a>
@@ -18,7 +21,7 @@
             <a class="dropdown-item" routerLink="consulta-funcao">Consultar funções</a>
           </div>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" *ngIf="isAuthenticated">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Manter Setores
           </a>
@@ -27,7 +30,7 @@
             <a class="dropdown-item" routerLink="consulta-setor">Consultar setores</a>
           </div>
         </li>    
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" *ngIf="isAuthenticated">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Manter Funcionários
           </a>
@@ -35,6 +38,10 @@
             <a class="dropdown-item" routerLink="cadastro-funcionario">Cadastrar novo funcionário</a>
             <a class="dropdown-item" routerLink="consulta-funcionario">Consultar funcionários</a>
           </div>
+        </li>
+        <li class="nav-item" *ngIf="isAuthenticated">
+          <a class="btn btn-danger btn-sm text-white mt-1 ml-4"
+             (click)="logout()">Logout</a>
         </li>          
       </ul>
     </div>

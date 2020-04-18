@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-consulta-funcionario',
@@ -18,6 +19,9 @@ export class ConsultaFuncionarioComponent implements OnInit {
     idFuncao : 0
   }; 
 
+  access_token="";
+  headers:HttpHeaders;
+
   funcionarios = []; //array vazio..
   setores = []; //array vazio..
   funcoes = []; //array vazio..
@@ -30,17 +34,27 @@ export class ConsultaFuncionarioComponent implements OnInit {
   endpointFuncao = "http://localhost:53634/api/funcao";
 
   //injeção de dependência
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+    private cookieService:CookieService) { }
 
   //função executada sempre que o componente for renderizado
   ngOnInit(): void {
+
+    this.access_token = this.cookieService.get('access_token');
+    this.headers = new HttpHeaders()
+    .set('Authorization', 'Bearer ' + this.access_token);
+
+
     this.consultarFuncionarios();
     this.consultarSetores();
     this.consultarFuncoes();
   }
 
   consultarFuncionarios() {
-    this.httpClient.get(this.endpointFuncionario)
+
+    const headers = this.headers;
+
+    this.httpClient.get(this.endpointFuncionario, {headers})
       .subscribe(
         (data: any[]) => {
           this.funcionarios = data;
@@ -49,7 +63,10 @@ export class ConsultaFuncionarioComponent implements OnInit {
   }
 
   consultarSetores() {
-    this.httpClient.get(this.endpointSetor)
+
+    const headers = this.headers;
+
+    this.httpClient.get(this.endpointSetor, {headers})
       .subscribe(
         (data: any[]) => {
           this.setores = data;
@@ -58,7 +75,10 @@ export class ConsultaFuncionarioComponent implements OnInit {
   }
 
   consultarFuncoes() {
-    this.httpClient.get(this.endpointFuncao)
+
+    const headers = this.headers;
+
+    this.httpClient.get(this.endpointFuncao, {headers})
       .subscribe(
         (data: any[]) => {
           this.funcoes = data;
@@ -68,7 +88,10 @@ export class ConsultaFuncionarioComponent implements OnInit {
 
   excluirFuncionario(id) {
     if (window.confirm('Deseja realmente excluir o funcionário?')) {
-      this.httpClient.delete(this.endpointFuncionario + "/" + id)
+
+      const headers = this.headers;
+
+      this.httpClient.delete(this.endpointFuncionario + "/" + id, {headers})
         .subscribe(
           (data: any) => {
             this.mensagem = data.mensagem;
@@ -80,7 +103,9 @@ export class ConsultaFuncionarioComponent implements OnInit {
 
   exibirFuncionario(id){
     
-    this.httpClient.get(this.endpointFuncionario + "/" + id)
+    const headers = this.headers;
+
+    this.httpClient.get(this.endpointFuncionario + "/" + id, {headers} )
       .subscribe(
         (data: any) => {
           this.funcionarioEdicao = data;
@@ -91,10 +116,12 @@ export class ConsultaFuncionarioComponent implements OnInit {
   }
 
   atualizarFuncionario(formEdicao){
+
+    const headers = this.headers;
     
     this.mensagemEdicao = "Processando, por favor aguarde...";
 
-    this.httpClient.put(this.endpointFuncionario, formEdicao.value)
+    this.httpClient.put(this.endpointFuncionario, formEdicao.value, {headers})
     .subscribe(
       (data: any) =>{
         this.mensagemEdicao = data.mensagem;

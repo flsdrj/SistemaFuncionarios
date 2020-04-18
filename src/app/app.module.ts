@@ -8,16 +8,19 @@ import { CadastroFuncionarioComponent } from './cadastro-funcionario/cadastro-fu
 import { ConsultaSetorComponent } from './consulta-setor/consulta-setor.component';
 import { ConsultaFuncaoComponent } from './consulta-funcao/consulta-funcao.component';
 import { ConsultaFuncionarioComponent } from './consulta-funcionario/consulta-funcionario.component';
+import { AcessoUsuariosComponent } from './acesso-usuarios/acesso-usuarios.component';
 
 //importando a biblioteca de rotas
 import { RouterModule, Routes } from '@angular/router';
 
-//importando a biblioteca para fazer chmadas a uma API
+//importando a biblioteca para fazer chamadas à uma API
 import { HttpClientModule } from '@angular/common/http';
 
-//importando a biblioteca para criar formularios dinamicos no projeto
+//importando a biblioteca para criar formulários dinamicos no projeto
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+//importando a biblioteca para gravação de cookies
+import { CookieService } from 'ngx-cookie-service';
 
 //mapear uma rota para cada componente / página
 const appRoutes : Routes = [
@@ -26,9 +29,9 @@ const appRoutes : Routes = [
   { path : 'cadastro-funcionario', component: CadastroFuncionarioComponent },
   { path : 'consulta-funcao', component: ConsultaFuncaoComponent },
   { path : 'consulta-setor', component: ConsultaSetorComponent },
-  { path : 'consulta-funcionario', component: ConsultaFuncionarioComponent }
+  { path : 'consulta-funcionario', component: ConsultaFuncionarioComponent },
+  { path : 'acesso-usuario', component: AcessoUsuariosComponent }
 ];
-
 
 @NgModule({
   declarations: [
@@ -37,20 +40,20 @@ const appRoutes : Routes = [
     CadastroSetorComponent,
     CadastroFuncionarioComponent,
     ConsultaSetorComponent,
-    ConsultaFuncaoComponent,    
-    ConsultaFuncionarioComponent
+    ConsultaFuncaoComponent,
+    ConsultaFuncionarioComponent,
+    AcessoUsuariosComponent
   ],
-  imports: [
+  imports: [  
     BrowserModule,
     //registrando as rotas mapeadas
     RouterModule.forRoot(appRoutes),
-    //registrar as bibliotecas Http e Forms
+    //registrando as bibliotecas Http e Forms
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule
-    
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

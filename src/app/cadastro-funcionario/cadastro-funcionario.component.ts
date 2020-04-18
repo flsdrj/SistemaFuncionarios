@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-cadastro-funcionario',
@@ -11,24 +12,49 @@ export class CadastroFuncionarioComponent implements OnInit {
   //atributos
   setores = []; //array vazio
   funcoes = []; //array vazio
-  mensagem:string;
+  mensagem: string;
+
+  access_token = "";
+  headers: HttpHeaders;
+
+  endpointSetor = "http://localhost:53634/api/setor";
+  endpointFuncao = "http://localhost:53634/api/funcao";
+  endpointFuncionario = "http://localhost:53634/api/funcionario";
 
   //injeção de dependência do HttpClient
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+    private cookieService: CookieService) { }
 
   //método executado sempre que o componente é renderizado
   ngOnInit(): void {
 
+    this.access_token = this.cookieService.get('access_token');
+    this.headers = new HttpHeaders()
+      .set('Authorization', 'Bearer ' + this.access_token);
+
+    this.consultarFuncoes();
+    this.consultarSetores();
+  }
+
+  consultarSetores() {
+
+    const headers = this.headers;
+
     //acessar a API para consultar setores..
-    this.httpClient.get("http://localhost:53634/api/setor")
+    this.httpClient.get(this.endpointSetor, {headers})
       .subscribe(
         (data: any[]) => {
           this.setores = data;
         }
       );
+  }
+
+  consultarFuncoes() {
+
+    const headers = this.headers;
 
     //acessar a API para consultar funções..
-    this.httpClient.get("http://localhost:53634/api/funcao")
+    this.httpClient.get(this.endpointFuncao, {headers})
       .subscribe(
         (data: any[]) => {
           this.funcoes = data;
@@ -36,20 +62,22 @@ export class CadastroFuncionarioComponent implements OnInit {
       );
   }
 
-  cadastrarFuncionario(formCadastro){
+  cadastrarFuncionario(formCadastro) {
 
     this.mensagem = "Processando, por favor aguarde...";
 
+    const headers = this.headers;
+
     //realizando uma chamada POST para a API..
-    this.httpClient.post("http://localhost:53634/api/funcionario", 
-      formCadastro.value)
+    this.httpClient.post
+      (this.endpointFuncionario, formCadastro.value, {headers})
       .subscribe(
-        (data:any) =>{
+        (data: any) => {
           this.mensagem = data.mensagem;
           formCadastro.reset();
         }
       )
-    
+
   }
 
 }
