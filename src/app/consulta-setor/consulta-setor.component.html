@@ -14,10 +14,11 @@
             <td>{{item.idSetor}}</td>
             <td>{{item.nome}}</td>
             <td>
-                <button class="btn btn-primary btn-sm mr-2">
+                <button class="btn btn-primary btn-sm mr-2" (click)="exibirSetor(item.idSetor)"
+                data-target="#janelaedicao" data-toggle="modal">
                     Atualizar
                 </button>
-                <button class="btn btn-danger btn-sm">
+                <button class="btn btn-danger btn-sm" (click)="excluirSetor(item.idSetor)">
                     Excluir
                 </button>
             </td>
@@ -29,3 +30,37 @@
         </tr>
     </tfoot>
 </table>
+
+<div id="janelaedicao" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h4 class="modal-title">Atualizar Setor</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form #formEdicao="ngForm" (submit)="atualizarSetor(formEdicao)">
+
+                    <input type="hidden" name="IdSetor"
+                        [(ngModel)]="setorEdicao.idSetor" />
+
+                    <label>Nome do Setor:</label>
+                    <input type="text" name="Nome" class="form-control"
+                        [(ngModel)]="setorEdicao.nome" />
+                    <br />                    
+
+                    <input type="submit" value="Atualizar Setor" class="btn btn-success" />
+                    <br />
+                    <br />
+
+                    <strong>{{mensagemEdicao}}</strong>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
